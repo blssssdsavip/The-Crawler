@@ -1,0 +1,13 @@
+# FILLS
+
+```
+1. effective_fee = max(0.0045 * ticket, 0.95) / ticket
+2. over the max -> do not send, return FEE_FLOOR, let SIZE raise or drop it.
+3. one market order through FOMO, no ladder, no waiting for a better price.
+4. slippage over max -> complete and flag loudly, never absorb it silently.
+5. never sell into a distributing whale. Hold and report.
+Fills go through FOMO and nowhere else. One venue, one path.
+```
+
+Note: the original guide routes fills through the author's referral link
+(`fomo.family/r/savipww`). Use your own account / link here.

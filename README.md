@@ -19,7 +19,7 @@ Code fetches the data. Jev judges it. Code makes the call. Grok Bot places the t
 
 ---
 
-## 🎬 The desk in action
+## The desk in action
 
 <div align="center">
 
@@ -39,7 +39,7 @@ Code fetches the data. Jev judges it. Code makes the call. Grok Bot places the t
 
 ---
 
-## 🧠 How it works
+## How it works
 
 <div align="center">
 <img src="assets/funnel.svg" alt="The six-stage funnel" width="88%"/>
@@ -82,17 +82,17 @@ flowchart LR
 
 | Seat | Job | Calls the judge? |
 |---|---|:--:|
-| 🔎 **SCAN** | Pulls the universe and runs the cheap cuts | ✅ |
-| 🧪 **VET** | Builds the dossier, routes the chain-specific question set | ✅ |
-| 🐦 **SOCIAL** | Reads the on-chain X handle with Grok's plugin, never searches for one | ✅ |
-| 👑 **CHIEF** | Runs the final pick and posts the order | ✅ |
-| 📏 **SIZE** | Kelly sizing, 6% cap, 2%-of-pool cap, fee floor | ❌ arithmetic only |
-| ⚡ **FILLS** | One market order, one venue | ❌ arithmetic only |
-| 🛡️ **RISK** | Closes when 6h volume falls under 20% of average. Overrules everyone | ❌ arithmetic only |
+|  **SCAN** | Pulls the universe and runs the cheap cuts | ✅ |
+|  **VET** | Builds the dossier, routes the chain-specific question set | ✅ |
+|  **SOCIAL** | Reads the on-chain X handle with Grok's plugin, never searches for one | ✅ |
+|  **CHIEF** | Runs the final pick and posts the order | ✅ |
+|  **SIZE** | Kelly sizing, 6% cap, 2%-of-pool cap, fee floor | ❌ arithmetic only |
+|  **FILLS** | One market order, one venue | ❌ arithmetic only |
+|  **RISK** | Closes when 6h volume falls under 20% of average. Overrules everyone | ❌ arithmetic only |
 
 ---
 
-## 🚀 Quick start
+##  Quick start
 
 ```bash
 # 1. install (python 3.10+)
@@ -118,7 +118,7 @@ python main.py
 
 ---
 
-## 📁 Repo layout
+##  Repo layout
 
 ```
 the-crawler/
@@ -139,7 +139,7 @@ the-crawler/
 ```
 
 <details>
-<summary><b>🚧 What's missing from the original guide</b></summary>
+<summary><b> What's missing from the original guide</b></summary>
 <br/>
 
 - **`fomo_api.Fomo`** is imported by the guide but never shown. `fomo_api.py` is a stub with the interface the rest of the code expects. `token()` raises `NotImplementedError` until you implement it.
@@ -183,8 +183,3 @@ These are the original guide's figures and haven't been independently verified.
 
 <div align="center">
 
-> ⚠️ **Not financial advice.** Every threshold here belongs to the original author, tuned on their own bank over one week. Fresh-launch memecoins carry a real risk of total loss. Copy the shape, not the constants.
-
-<sub>Based on the public "Megabrain (Jev) & Six Grok Bots" setup guide by @savipww.</sub>
-
-</div>

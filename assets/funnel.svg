@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470">
+  <rect width="900" height="470" rx="14" fill="#0b0f1e"/>
+  <g font-family="'JetBrains Mono','SFMono-Regular',Menlo,Consolas,monospace">
+    <text x="30" y="40" font-size="14" font-weight="700" fill="#ff7ad9" letter-spacing="2">THE FUNNEL · EACH PASS KILLS HARDER THAN THE ONE BELOW</text>
+  </g>
+  <g font-family="'JetBrains Mono','SFMono-Regular',Menlo,Consolas,monospace" font-size="15">
+    <!-- rows: x offset grows, width shrinks -->
+    <g><rect x="30"  y="62"  width="840" height="50" rx="8" fill="#1d2342"/><rect x="30" y="62" width="6" height="50" fill="#4ea1ff"/>
+      <text x="52" y="93" fill="#fff" font-weight="700">0 UNIVERSE</text><text x="210" y="93" fill="#9aa3c7">GeckoTerminal new_pools · 3 chains</text><text x="850" y="93" fill="#4ea1ff" text-anchor="end">fresh launches</text></g>
+    <g><rect x="60"  y="120" width="780" height="50" rx="8" fill="#1d2342"/><rect x="60" y="120" width="6" height="50" fill="#4ea1ff"/>
+      <text x="82" y="151" fill="#fff" font-weight="700">1 LIST</text><text x="210" y="151" fill="#9aa3c7">FOMO filterTokens · 20 per call</text><text x="820" y="151" fill="#4ea1ff" text-anchor="end">hundreds</text></g>
+    <g><rect x="90"  y="178" width="720" height="50" rx="8" fill="#1d2342"/><rect x="90" y="178" width="6" height="50" fill="#2ee88a"/>
+      <text x="112" y="209" fill="#fff" font-weight="700">2 FREE CUT</text><text x="250" y="209" fill="#9aa3c7">age · liq · vol · mcap · no network</text><text x="790" y="209" fill="#2ee88a" text-anchor="end">tens</text></g>
+    <g><rect x="120" y="236" width="660" height="50" rx="8" fill="#1d2342"/><rect x="120" y="236" width="6" height="50" fill="#2ee88a"/>
+      <text x="142" y="267" fill="#fff" font-weight="700">3 TRADE CUT</text><text x="290" y="267" fill="#9aa3c7">DexScreener buys / sells</text><text x="760" y="267" fill="#2ee88a" text-anchor="end">a handful</text></g>
+    <g><rect x="150" y="294" width="600" height="50" rx="8" fill="#1d2342"/><rect x="150" y="294" width="6" height="50" fill="#f3ba2f"/>
+      <text x="172" y="325" fill="#fff" font-weight="700">4 DOSSIER</text><text x="300" y="325" fill="#9aa3c7">GT info + chain RPC + X</text><text x="730" y="325" fill="#f3ba2f" text-anchor="end">3 / cycle</text></g>
+    <g><rect x="180" y="352" width="540" height="50" rx="8" fill="#1d2342"/><rect x="180" y="352" width="6" height="50" fill="#ff3fc8"/>
+      <text x="202" y="383" fill="#fff" font-weight="700">5 JUDGE</text><text x="310" y="383" fill="#9aa3c7">market + chain + social</text><text x="700" y="383" fill="#ff3fc8" text-anchor="end">shortlist</text></g>
+    <g><rect x="210" y="410" width="480" height="50" rx="8" fill="#2a1035" stroke="#ff3fc8"/><rect x="210" y="410" width="6" height="50" fill="#ff3fc8"/>
+      <text x="232" y="441" fill="#fff" font-weight="700">6 PICK</text><text x="330" y="441" fill="#9aa3c7">one choice</text><text x="670" y="441" fill="#ff7ad9" text-anchor="end" font-weight="700">1 token or none</text></g>
+  </g>
+</svg>

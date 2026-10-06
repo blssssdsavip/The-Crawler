@@ -1,68 +1,190 @@
-# The Crawler
+<div align="center">
 
-A memecoin scanning desk: code fetches, Jev (TypeSafe) judges, code decides, Grok Bot trades.
-Based on the public "Megabrain (Jev) & Six Grok Bots" setup guide by @savipww.
+<img src="assets/banner.svg" alt="The Crawler" width="100%"/>
 
-> ⚠️ **This is not financial advice.** Every threshold here is the original author's,
-> tuned on their own bank over one week. Run in shadow mode first. Memecoin trading
-> on fresh launches carries a high risk of total loss.
+<br/>
 
-## The funnel
+![Python](https://img.shields.io/badge/python-3.10+-ff3fc8?style=for-the-badge&logo=python&logoColor=white&labelColor=0b0f1e)
+![FastAPI](https://img.shields.io/badge/judge-FastAPI-2ee88a?style=for-the-badge&logo=fastapi&logoColor=white&labelColor=0b0f1e)
+![Chains](https://img.shields.io/badge/chains-SOL%20·%20BSC%20·%20Robinhood-4ea1ff?style=for-the-badge&labelColor=0b0f1e)
+![Mode](https://img.shields.io/badge/default-shadow%20mode-f3ba2f?style=for-the-badge&labelColor=0b0f1e)
 
+**A memecoin scanning desk that turns every judgement into a typed number with a probability on it.**
+<br/>
+Code fetches the data. Jev judges it. Code makes the call. Grok Bot places the trade.
+
+[Demo](#-the-desk-in-action) · [How it works](#-how-it-works) · [Quick start](#-quick-start) · [The seats](#-the-seats) · [Files](#-repo-layout)
+
+</div>
+
+---
+
+## 🎬 The desk in action
+
+<div align="center">
+
+<a href="assets/demo.mp4">
+  <img src="assets/demo.gif" alt="The Crawler running live" width="520"/>
+</a>
+
+<sub>▶ Click the preview for the full video (<code>assets/demo.mp4</code>)</sub>
+
+<br/><br/>
+
+<img src="assets/dashboard.png" alt="Grokbot + Jev dashboard, day 1" width="100%"/>
+
+<sub>Day 1 dashboard: Jev's checks on the left, the Grok Bot floor on the right, balance below.</sub>
+
+</div>
+
+---
+
+## 🧠 How it works
+
+<div align="center">
+<img src="assets/funnel.svg" alt="The six-stage funnel" width="88%"/>
+</div>
+
+Every pass costs more than the one above it, so every pass has to kill harder. The free cut reads only what came back in the FOMO batch, so it touches no network at all. Only survivors earn a DexScreener call, and only those earn one of the three GeckoTerminal dossier slots per cycle.
+
+The judge answers with exactly three kinds of question:
+
+| Type | Asks | Returns | Acts like |
+|:--:|---|---|:--:|
+| 🟢 `noul` | Is this true? | probability 0 → 1 | `if` |
+| 🔵 `choice` | Which one? (≤ 255 options) | choice + probabilities + confidence | `switch` |
+| 🟡 `score` | Rate on my rubric (≤ 10 levels) | score + probabilities + confidence | `sort` |
+
+> **The split to hold onto:** Jev takes the judgements, code takes the arithmetic. Every number is computed *before* the call and passed in as a field.
+
+---
+
+## 🪑 The seats
+
+```mermaid
+flowchart LR
+    SCAN([🔎 SCAN]) --> VET([🧪 VET])
+    VET --> SOCIAL([🐦 SOCIAL])
+    SOCIAL --> CHIEF([👑 CHIEF])
+    CHIEF -->|order| SIZE([📏 SIZE])
+    SIZE -->|ticket| FILLS([⚡ FILLS])
+    FILLS -->|fill| RISK([🛡️ RISK])
+    RISK -->|close + release| BOOK[(📒 BOOK)]
+    JUDGE{{⚖️ JUDGE · Jev}} -.-> SCAN & VET & SOCIAL & CHIEF
+
+    classDef judge fill:#2a1035,stroke:#ff3fc8,color:#fff
+    classDef seat fill:#1d2342,stroke:#4ea1ff,color:#fff
+    classDef exec fill:#0f2a1e,stroke:#2ee88a,color:#fff
+    class JUDGE judge
+    class SCAN,VET,SOCIAL,CHIEF seat
+    class SIZE,FILLS,RISK,BOOK exec
 ```
-0. UNIVERSE  GeckoTerminal new_pools, 3 chains          -> fresh launches
-1. LIST      FOMO filterTokens, 20 per call             -> hundreds, one batch
-2. FREE CUT  age, liquidity, volume, mcap. No network   -> tens
-3. TRADE CUT DexScreener buys and sells, one per token  -> a handful
-4. DOSSIER   GeckoTerminal info + chain RPC + X         -> three per cycle
-5. JUDGE     market + chain + social per token          -> scored shortlist
-6. PICK      one choice over the shortlist              -> one token, or none
-```
 
-## Layout
+| Seat | Job | Calls the judge? |
+|---|---|:--:|
+| 🔎 **SCAN** | Pulls the universe and runs the cheap cuts | ✅ |
+| 🧪 **VET** | Builds the dossier, routes the chain-specific question set | ✅ |
+| 🐦 **SOCIAL** | Reads the on-chain X handle with Grok's plugin, never searches for one | ✅ |
+| 👑 **CHIEF** | Runs the final pick and posts the order | ✅ |
+| 📏 **SIZE** | Kelly sizing, 6% cap, 2%-of-pool cap, fee floor | ❌ arithmetic only |
+| ⚡ **FILLS** | One market order, one venue | ❌ arithmetic only |
+| 🛡️ **RISK** | Closes when 6h volume falls under 20% of average. Overrules everyone | ❌ arithmetic only |
 
-| File | Role |
-|---|---|
-| `judge.py` | FastAPI service. Only process holding `TYPESAFE_API_KEY`. |
-| `judge_client.py` | What every seat uses to call the judge. |
-| `questions.py` | Every question set (market, solana, bsc, robinhood, social, pick). |
-| `collect.py` | Universe, shortlist, trade counts, dossier. |
-| `thresholds.py` | Every number. Retune here only. |
-| `filter.py` | free_kill → trade_kill → chain_kill → soft_kill. |
-| `pick.py` | Final choice over survivors + size factor. |
-| `book.py` | One-position guard and rejection bench (SQLite). |
-| `main.py` | The cycle loop. Defaults to shadow mode. |
-| `fomo_api.py` | **Stub.** Not included in the original guide — you must implement it. |
-| `desk.py` | `ShadowDesk` stand-in for the Grok Bot side. |
-| `prompts/` | Seat prompts: handoff, SOCIAL, SIZE, FILLS, RISK, order sequence. |
-| `scripts/` | Key test, judge link test, judge launcher. |
+---
 
-## Setup
+## 🚀 Quick start
 
 ```bash
-pip install -r requirements.txt        # python 3.10+
-cp .env.example .env                    # fill in, then export the vars
+# 1. install (python 3.10+)
+pip install -r requirements.txt
+cp .env.example .env          # fill it in, then export the vars
 
-./scripts/test_key.sh                   # prove the TypeSafe key works
+# 2. prove the key works before anything else
+./scripts/test_key.sh
+
+# 3. start the judge and tunnel it to the bots
 export DESK_SECRET="$(openssl rand -hex 24)"
-./scripts/run_judge.sh                  # judge + cloudflared tunnel
-./scripts/test_judge_link.sh            # run from a bot's terminal
+./scripts/run_judge.sh
 
-python main.py                          # shadow mode by default (SHADOW=1)
+# 4. prove the link from a bot's own terminal
+./scripts/test_judge_link.sh
+
+# 5. run the shift (shadow mode by default)
+python main.py
 ```
 
-## What's missing from the original guide
+> [!IMPORTANT]
+> `main.py` starts in **shadow mode**: it does everything except send the order. Leave it there for at least a week and read the rows in `shadow_log.jsonl` where the desk disagrees with you. That is where your thresholds come from. Flip with `SHADOW=0`.
 
-- **`fomo_api.Fomo`** is imported but never shown. `fomo_api.py` here is a stub with the
-  interface the rest of the code expects; `token()` raises `NotImplementedError`.
-- **The Grok Bot side** (`desk.read_x`, `desk.send_to_seats`, Telegram reporting) lives on
-  the bots, not in this repo. `desk.py` gives a local shadow-mode stand-in.
-- **The original six-seat setup** the guide builds on is a separate post and is not included.
+---
 
-## Rate limits and failures
+## 📁 Repo layout
 
-- GeckoTerminal free tier: 10 calls/min. 6 go to the universe, 3 to dossiers. Use
-  `universe(pages=1)` for 3 more dossiers.
-- 429 GeckoTerminal → back off a full minute. 429 DexScreener → lower `DEX_BUDGET`.
-- 422 from Jev → question is malformed. Never retry.
-- Judge unreachable → skip the cycle. No fallback to guessing.
+```
+the-crawler/
+├── judge.py            ⚖️  FastAPI service, the only holder of the TypeSafe key
+├── judge_client.py     🔌  how every seat reaches the judge
+├── questions.py        ❓  every question set: market, solana, bsc, robinhood, social, pick
+├── collect.py          🕸️  universe → shortlist → trade counts → dossier
+├── thresholds.py       🎚️  every number on the desk. retune here only
+├── filter.py           🧹  free_kill → trade_kill → chain_kill → soft_kill
+├── pick.py             🎯  one choice over the survivors + size factor
+├── book.py             📒  one-position guard + rejection bench (SQLite)
+├── main.py             🔁  the 15-minute cycle
+├── desk.py             🧪  ShadowDesk stand-in for the Grok Bot side
+├── fomo_api.py         🚧  stub, see below
+├── prompts/            💬  handoff, SOCIAL, SIZE, FILLS, RISK, order sequence
+├── scripts/            🛠️  key test, link test, judge launcher
+└── assets/             🎨  banner, funnel, dashboard, demo video
+```
+
+<details>
+<summary><b>🚧 What's missing from the original guide</b></summary>
+<br/>
+
+- **`fomo_api.Fomo`** is imported by the guide but never shown. `fomo_api.py` is a stub with the interface the rest of the code expects. `token()` raises `NotImplementedError` until you implement it.
+- **The Grok Bot side** (`desk.read_x`, `desk.send_to_seats`, Telegram reporting) lives on the bots, not in this repo. `desk.py` gives you a local shadow-mode stand-in.
+- **The original six-seat setup** this builds on is a separate post and isn't included.
+- **FILLS** in the original guide routes through the author's referral link. Swap in your own in `prompts/fills.md`.
+
+</details>
+
+<details>
+<summary><b>⏱️ Rate limits & failure handling</b></summary>
+<br/>
+
+| Event | Response |
+|---|---|
+| 429 GeckoTerminal | Back off a full minute. If it keeps happening, use `universe(pages=1)` for 3 more dossier slots |
+| 429 DexScreener | Lower `DEX_BUDGET` in `main.py` |
+| 429 / 529 Jev | SDK backs off on its own |
+| 422 Jev | Question is malformed. **Never retry.** Stop the cycle |
+| Dossier throws | Skip the token. Not a pass |
+| Judge unreachable | Skip the whole cycle. No guessing |
+| FOMO bearer expired | Refreshed at the top of every cycle |
+
+</details>
+
+<details>
+<summary><b>💸 The bill</b></summary>
+<br/>
+
+```
+cost_per_call = (state_tokens + question_tokens) / 1_000_000 × $0.042
+10 calls × 1,400 tokens  = 14,000 tokens per cycle  ≈ $0.00059
+96 cycles a day          ≈ 5.7¢ / day
+```
+
+These are the original guide's figures and haven't been independently verified.
+
+</details>
+
+---
+
+<div align="center">
+
+> ⚠️ **Not financial advice.** Every threshold here belongs to the original author, tuned on their own bank over one week. Fresh-launch memecoins carry a real risk of total loss. Copy the shape, not the constants.
+
+<sub>Based on the public "Megabrain (Jev) & Six Grok Bots" setup guide by @savipww.</sub>
+
+</div>
